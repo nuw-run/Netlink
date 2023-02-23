@@ -11,7 +11,7 @@ import Socket
 
 @frozen
 public struct NetlinkSocketAddress: Equatable, Hashable, SocketAddress {
-        
+    
     public typealias ProtocolID = NetlinkSocketProtocol
     
     public var processID: ProcessID
@@ -45,5 +45,12 @@ public struct NetlinkSocketAddress: Equatable, Hashable, SocketAddress {
             processID: ProcessID(rawValue: numericCast(value.nl_pid)),
             group: .init(bitPattern: value.nl_groups)
         )
+    }
+    
+    /// Don't use. Not sure what this is exactly.
+    public static func withUnsafePointer(
+        _ pointer: UnsafeMutablePointer<CInterop.SocketAddress>) -> Self
+    {
+        return self.init()
     }
 }
