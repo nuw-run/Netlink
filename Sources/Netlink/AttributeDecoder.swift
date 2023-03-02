@@ -68,6 +68,9 @@ public struct NetlinkAttributeDecoder {
             }
             
             let actualLength = length.extendTo4Bytes
+            if index + actualLength >= data.count {
+                throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: codingPath, debugDescription: "Attribute at index \(index) has actual length (\(actualLength)) greated than remaining data (\(data.count - index))"))
+            }
             
             let attributeData = Data(data[index ..< index + actualLength])
             
